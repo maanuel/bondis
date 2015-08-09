@@ -53,19 +53,7 @@ classdef Recorrido < handle
             % lo llevamos al origen
             pos = pos - obj.inicioPlano;
             p = (pos'*obj.m)/(norm(obj.m)^2);
-            
-            % buscamos vector perpendicular 
-            %y = [1;0];
-            %y(2) = -obj.m(1)/ obj.m(2);
-            
-            % llevamos pos al origen
-            % y lo descomponemos con la recta que une inicio y fin
-            %A = [obj.m y];
-            %B = pos-obj.inicioPlano;
-
-            %X = A\B;
-            
-            %p = X(1);
+           
         end
     end
     

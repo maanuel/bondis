@@ -14,7 +14,7 @@ classdef Colectivo < handle
     t_orig
     % tiempos de cada observacion - normalizados
     % la primera es la 0 y sucesivamente los deltas.
-    t_norm
+    t_norm % no necesariamente este asociada con el porcentaje == 0.
     % polinomio generado al simular el recorrido con cuadrados minimos
     prediccion
     % grado del polinomio

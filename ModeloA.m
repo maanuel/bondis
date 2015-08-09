@@ -1,6 +1,10 @@
 classdef ModeloA < Modelo
-    %UNTITLED2 Summary of this class goes here
-    %   Detailed explanation goes here
+    %En este modelo buscamos predecir buscando el colectivo mas parecido en su movimiento.
+    %   Si queremos predecir a c1, asumimos que sabemos cierta cantidad de
+    %   sus observaciones (del total). Con esa cantidad, buscamos el
+    %   colectivo que mas se haya parecido en la partición y con él
+    %   predecimos lo que falta para llegar al final.
+    %   Luego calculamos la diferencia con los valores totales de c1.
     
     properties
         pObs % porcentaje de obs usadas para simular
@@ -39,8 +43,8 @@ classdef ModeloA < Modelo
 end
 
 function dist = comparar( c1, c2, obs)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+% Calculamos la integral del error cuadratico de ambas funciones
+% predictoras, con cierto número de observaciones para c1.
 
 % cuantos observaciones consideramos
 % en este caso la mitad
@@ -69,10 +73,6 @@ t_0 = arribo(c2, 0);
 C = t_0 - t0;
 C = [1 C];
 
-%plotPrediccion(c1, 0, tend);
-%hold on;
-%plotPrediccion(c2, t_0-t0, tend -t0 + t_0);
-
 % Matlab no me sabe dar los coeficientes de una composicion de polinomios,
 % entonces tampoco lo puedo integrar.
 % Evaluamos la composicion en ciertos puntos, para poder determinarlo luego
@@ -96,6 +96,8 @@ INTEGRAL = polyint(PRODUCTO);
 dist = polyval(INTEGRAL, tend) - polyval(INTEGRAL, t0);
 end
 
+% Dentro de un fold (K) buscamos cual colectivo del train, se parece mas a
+% colectivoId con cierto nroObs.
 function [ similar similitud ] = hallarSimilar(model, colectivoId, K, nroObs)
 
     min = 0;

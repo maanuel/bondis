@@ -1,9 +1,9 @@
 classdef Modelo < handle
-    %UNTITLED Summary of this class goes here
-    %   Detailed explanation goes here
+    %Clase Abstracta para comparar los distintos criterios de predicciones.
+    %   Cada subclase deberá definir el método predecir.
     
     properties
-        colectivos
+        colectivos % los cargamos una vez a la memoria, evitamos levantar muchas veces el mismo archivo.
         cv
         recorrido
     end
@@ -26,6 +26,16 @@ classdef Modelo < handle
             obj.cv = cvpartition(length(listing), 'KFold');
         end
         
+        % Ejecuta el modelo y devuelve los errores de predicción en una
+        % matriz.
+        % Por cada fila, se encuentran los errores de cada elemento del
+        % test.
+        % Hay tantas filas como folds (por defecto es 10)
+        % Hay tantas columnas, como elementos en el test.
+        % A veces hay un 0, porque no todos los test set tienen la misma
+        % dimensión.
+        % TODO: Sería útil retornarla traspuesta, por como funciona la
+        % función mean.
         function res = run(obj)
             tic
             % res es una matriz que tiene los resultados de cada predicción
